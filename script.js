@@ -16,9 +16,6 @@ function startVideo() {
 }
 
 video.addEventListener('play', () => {
-  let textFace = document.querySelector('.faceText');
-  textFace.innerHTML += 'This just got added';
-
   const canvas = faceapi.createCanvasFromMedia(video);
   document.body.append(canvas);
   const displaySize = { width: video.width, height: video.height };
@@ -28,9 +25,7 @@ video.addEventListener('play', () => {
       .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
       .withFaceLandmarks()
       .withFaceExpressions();
-
     const resizedDetections = faceapi.resizeResults(detections, displaySize);
-
     canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
     faceapi.draw.drawDetections(canvas, resizedDetections);
     faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
